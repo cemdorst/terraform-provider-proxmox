@@ -16,7 +16,7 @@ Lists all available Proxmox VE storages.
 terraform {
   required_providers {
     proxmox = {
-      source = "hashicorp/proxmox"
+      source = "cemdorst/proxmox"
     }
   }
 }
