@@ -62,15 +62,15 @@ You can also use environment variables:
 - `PROXMOX_TOKEN_ID` - API token ID (e.g., root@pam!terraform)
 - `PROXMOX_TOKEN_SECRET` - API token secret UUID
 
-### LVM Storage Resource
+### Storages Data Source
 
 ```hcl
-resource "proxmox_lvm_storage" "example" {
-  node    = "pve"
-  storage = "local-lvm"
-  vg      = "pve"
-  content = "images,rootdir"
-  shared  = false
+# Get all available storages
+data "proxmox_storages" "all" {}
+
+# Output storage names
+output "storage_names" {
+  value = [for storage in data.proxmox_storages.all.storages : storage.storage]
 }
 ```
 
@@ -82,34 +82,6 @@ resource "proxmox_lvm_storage" "example" {
 - `token_id` (String, Required) - The Proxmox API token ID (e.g., `root@pam!terraform`)
 - `token_secret` (String, Required, Sensitive) - The Proxmox API token secret UUID
 - `skip_verify` (Boolean, Optional) - Skip TLS certificate verification (default: false)
-
-## Resources
-
-### `proxmox_lvm_storage`
-
-Manages an LVM storage configuration on a Proxmox VE node.
-
-#### Arguments
-
-- `node` (String, Required) - Target node for the storage
-- `storage` (String, Required) - Storage ID
-- `vg` (String, Required) - LVM volume group name
-- `content` (String, Optional) - Allowed content types (default: "images,rootdir")
-- `shared` (Boolean, Optional) - Whether storage is shared across all nodes
-- `disable` (Boolean, Optional) - Disable storage
-- `nodes` (String, Optional) - List of cluster node names where this storage is usable
-
-#### Attributes Reference
-
-- `id` - The storage identifier
-
-#### Import
-
-LVM storage resources can be imported using the format `node:storage`:
-
-```shell
-terraform import proxmox_lvm_storage.example pve:local-lvm
-```
 
 ## Data Sources
 

@@ -21,7 +21,7 @@ import (
 // Ensure ProxmoxProvider satisfies various provider interfaces.
 var _ provider.Provider = &ProxmoxProvider{}
 
-// ProxmoxClient wraps the HTTP client for Proxmox API communication
+// ProxmoxClient wraps the HTTP client for Proxmox API communication.
 type ProxmoxClient struct {
 	HTTPClient  *http.Client
 	Endpoint    string
@@ -29,7 +29,7 @@ type ProxmoxClient struct {
 	TokenSecret string
 }
 
-// DoRequest makes an HTTP request to the Proxmox API
+// DoRequest makes an HTTP request to the Proxmox API.
 func (c *ProxmoxClient) DoRequest(method, path string, body interface{}) (*http.Response, error) {
 	var buf bytes.Buffer
 	if body != nil {
